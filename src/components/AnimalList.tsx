@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import SingleAnimal from "./SingleAnimal";
 
 export interface Animal {
   vrsta: string;
   ime: string;
-  datumRodjenja: Date;
+  datumRodjenja?: Date;
 }
 const ListOfAnimals: Animal[] = [
   { vrsta: "Macka", ime: "Sareni", datumRodjenja: new Date(2020,5, 6) },
@@ -15,6 +15,12 @@ const ListOfAnimals: Animal[] = [
 ];
 
 function AnimalList() {
+    const [ animals, setAnimals ] = useState(ListOfAnimals)
+
+    const onRemove = (animalIndex: number) => {
+        setAnimals(animals.filter((animal, index) => animalIndex !== index));
+    };
+
   return (
     <table>
       <thead>
@@ -25,8 +31,8 @@ function AnimalList() {
         </tr>
       </thead>
       <tbody>
-        {ListOfAnimals.map((animal) => (
-            <SingleAnimal animal={animal} />
+        {animals.map((animal, index) => (
+            <SingleAnimal key={index} animal={animal} onRemove= {() =>onRemove(index)}/>
         ))}
       </tbody>
     </table>
