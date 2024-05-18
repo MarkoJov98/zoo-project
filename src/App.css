@@ -1,11 +1,16 @@
-th, td {
-  padding: 20px;
+.zoo-table th,
+.zoo-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
   text-align: center;
-  border: 2px solid black;
+}
+.zoo-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
 }
 
-table {
-  border-collapse: collapse;
-  width: 80%;
-  border: 2px solid black;
-};
+.zoo-table button {
+  padding: 8px 14px;
+  background-color: greenyellow;
+}

@@ -10,7 +10,7 @@ const SingleAnimal: FC<AnimalProps> = ({
   animal,
   onRemove,
   moveToTop,
-}: AnimalProps) => {
+}) => {
   return (
     <tr>
       <td>{animal.vrsta}</td>
@@ -22,8 +22,6 @@ const SingleAnimal: FC<AnimalProps> = ({
       </td>
       <td>
         <button onClick={onRemove}>Remove</button>
-      </td>
-      <td>
         <button onClick={moveToTop}>Move to top</button>
       </td>
     </tr>
