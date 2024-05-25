@@ -5,14 +5,41 @@ export interface Animal {
   vrsta: string;
   ime: string;
   datumRodjenja?: Date;
+  sektor: string;
 }
 const ListOfAnimals: Animal[] = [
-  { vrsta: "Macka", ime: "Sareni", datumRodjenja: new Date(2020, 5, 6) },
-  { vrsta: "Pas", ime: "Dzeki", datumRodjenja: new Date(1998, 5, 4) },
-  { vrsta: "Majmun", ime: "Bob", datumRodjenja: new Date(2000, 6, 7) },
-  { vrsta: "Macka", ime: "Pera", datumRodjenja: new Date(2002, 7, 8) },
-  { vrsta: "Pas", ime: "Crni", datumRodjenja: new Date(2005, 11, 20) },
+  {
+    vrsta: "Macka",
+    ime: "Sareni",
+    datumRodjenja: new Date(2020, 5, 6),
+    sektor: "sisar",
+  },
+  {
+    vrsta: "Pas",
+    ime: "Dzeki",
+    datumRodjenja: new Date(1998, 5, 4),
+    sektor: "sisar",
+  },
+  {
+    vrsta: "Majmun",
+    ime: "Bob",
+    datumRodjenja: new Date(2000, 6, 7),
+    sektor: "sisar",
+  },
+  {
+    vrsta: "Zmija",
+    ime: "Pera",
+    datumRodjenja: new Date(2002, 7, 8),
+    sektor: "gmizavac",
+  },
+  {
+    vrsta: "Ptica",
+    ime: "Crni",
+    datumRodjenja: new Date(2005, 11, 20),
+    sektor: "ptica",
+  },
 ];
+const sektors = ["sisar", "gmizavac", "ptica"];
 
 function AnimalList() {
   const [animals, setAnimals] = useState(ListOfAnimals);
@@ -20,12 +47,15 @@ function AnimalList() {
     vrsta: "",
     ime: "",
     datumRodjenja: "",
+    sektor: sektors[0],
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setForm({...form, [name] : value});
-  }
+    setForm({ ...form, [name]: value });
+  };
 
   const onRemove = (animalIndex: number) => {
     setAnimals(animals.filter((animal, index) => animalIndex !== index));
@@ -43,15 +73,18 @@ function AnimalList() {
     const newAnimal: Animal = {
       vrsta: form.vrsta,
       ime: form.ime,
-      datumRodjenja: form.datumRodjenja ? new Date(form.datumRodjenja) : undefined
+      datumRodjenja: form.datumRodjenja
+        ? new Date(form.datumRodjenja)
+        : undefined,
+      sektor: form.sektor,
     };
     setAnimals([...animals, newAnimal]);
     setForm({
       vrsta: "",
       ime: "",
-      datumRodjenja: ""
+      datumRodjenja: "",
+      sektor: sektors[0],
     });
-    
   };
 
   return (
@@ -59,24 +92,52 @@ function AnimalList() {
       <form className="zoo-forma" onSubmit={addAnimal}>
         <label>
           Vrsta:
-          <input type="text" name="vrsta" value={form.vrsta} placeholder="Vrsta" onChange={handleChange}/>
+          <input
+            type="text"
+            name="vrsta"
+            value={form.vrsta}
+            placeholder="Vrsta"
+            onChange={handleChange}
+          />
         </label>
         <label>
           Ime:
-          <input type="text" name="ime" value={form.ime} placeholder="Ime" onChange={handleChange}/>
+          <input
+            type="text"
+            name="ime"
+            value={form.ime}
+            placeholder="Ime"
+            onChange={handleChange}
+          />
         </label>
         <label>
           Datum rodjenja:
-          <input  type="text" name="datumRodjenja" value={form.datumRodjenja} placeholder="Datum rodjenja" onChange={handleChange}/>
+          <input
+            type="date"
+            name="datumRodjenja"
+            value={form.datumRodjenja}
+            placeholder="Datum rodjenja"
+            onChange={handleChange}
+          />
+        </label>
+        <label>Sektor:
+        <select name="sektor" value={form.sektor} onChange={handleChange}>
+          {sektors.map((sector, index) => (
+            <option key={index} value={sector}>
+              {sector}
+            </option>
+          ))}
+        </select>
         </label>
         <button type="submit">Dodaj zivotinju</button>
       </form>
       <table className="zoo-table">
         <thead>
           <tr>
-            <th>Ime</th>
             <th>Vrsta</th>
+            <th>Ime</th>
             <th>Datum Rodjenja</th>
+            <th>Sektor</th>
             <th>Akcije</th>
           </tr>
         </thead>

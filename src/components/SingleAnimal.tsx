@@ -20,6 +20,7 @@ const SingleAnimal: FC<AnimalProps> = ({
           ? animal.datumRodjenja.toDateString()
           : "Nepoznato"}
       </td>
+      <td>{animal.sektor}</td>
       <td>
         <button onClick={onRemove}>Remove</button>
         <button onClick={moveToTop}>Move to top</button>
